@@ -1,0 +1,5 @@
+IMAP Server
+SMTP: thor.info.uaic.ro
+PORT: 587
+Encryption: STARTTSL
+
