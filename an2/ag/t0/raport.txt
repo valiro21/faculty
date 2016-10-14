@@ -1009,3 +1009,5 @@ Average solution: -0.00100000
 Worst solution: 0.00000000
 
 3.14159 3.14159 
+
+Function: easom
