@@ -53,3 +53,39 @@ double* hillClimbing (uint e, double direction, double step, double gamma_step, 
 	} while (step > min_step);
 	return newP;
 }
+
+double* hammingClimbing (uint e, double *start, double (*eval)(double*), double lowerLimit, double upperLimit) {
+	double *gradient = new double[e];
+	double *newP = new double[e];
+	for (int i = 0; i < e; i++) newP[i] = start[i];
+
+	double before;
+	do {
+		before = eval (newP);
+
+		for (int i = 0; i < e; i++) {
+			newP[i] = newP[i] + step;
+			double derivative = (eval(newP) - before) / step;
+
+			gradient[i] = derivative;
+
+			newP[i] = newP[i] - step;
+		}
+
+		for (int i = 0; i < e; i++) {
+			newP[i] += direction * gradient[i] * gamma_step;
+			trim (lowerLimit, upperLimit, newP[i]);
+		}
+
+		double newEval = eval (newP);
+		
+		if (DEBUG) {
+			for (int i = 0; i < e; i++) cout << newP[i] << ' ';
+			cout << " -> ";
+			cout << newEval << '\n';
+		}
+		
+		if (mabs (newEval - before) < epsilon) step /= 2;
+	} while (step > min_step);
+	return newP;
+}
